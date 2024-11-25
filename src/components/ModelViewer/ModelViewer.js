@@ -1,15 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import LazyLoad from "react-lazyload";
 // import "../../Products/ProductList.css";
-import QRCode from "qrcode.react";
 import Help from "./Help";
 const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
-  const [selectedVariant, setSelectedVariant] = useState('default');
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
   const [annotate, setAnnotate] = useState(false);
-  const [isInWishlist, setIsInWishlist] = useState(false);
-  
   
   let modelViewer1 = {
     backgroundColor: " #ecf0f3",
@@ -37,7 +33,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
 
 
   const handleAnnotateClick = (annotation) => {
-    const { orbit, target, position } = annotation;
+    const { target, position } = annotation;
     model.current.cameraTarget = position;
     model.current.orbit = target
   }
@@ -84,20 +80,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
   }, []);
    
   useEffect(() => {
-    if(wishlist){
-    const isInWishlist = wishlist.some((wishlistItem) => wishlistItem.id === item.id);
-    setIsInWishlist(isInWishlist);
-    }
   }, [item, wishlist]);
-  const handleAddToWishlist = () => {
-    if (isInWishlist) {
-      removeFromWishlist(item.id);
-    } 
-    else 
-    {
-      addToWishlist(item);
-    }
-  };
 
   return (
     <div className="model-view">
@@ -171,37 +154,10 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
       <LazyLoad>
         {/* Card content below the model-viewer */}
         <div className="qr-sec">
-          {!ARSupported && (
-            <QRCode
-              id={item.name}
-              value={window.location.href}
-              size={110}
-              bgColor="#ffffff"
-              fgColor="#000000"
-              level="H"
-              includeMargin
-            />
-          )}
-
           <div className="product-details">
             <div>
               <div className="pname">{item.name}</div>
-              <div className="rating-sec">
-                <div>Rating</div>
-                <div>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span>&#9733;</span>
-                  <span>&#9733;</span>
-                </div>
-              </div>
-              <div>Rs. 1000</div>
-              {!ARSupported && <h5>Scan the QR code for AR View on mobile</h5>}
             </div>
-            <button className="add-icon" onClick={handleAddToWishlist}>
-              {isInWishlist ? '-' : '+'}
-            </button>
           </div>
         </div>
       </LazyLoad>
