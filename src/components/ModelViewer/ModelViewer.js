@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import LazyLoad from "react-lazyload";
 // import "../../Products/ProductList.css";
 import Help from "./Help";
-const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
+const ModelViewer = ({ item }) => {
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
   const [annotate, setAnnotate] = useState(false);
@@ -80,7 +80,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
   }, []);
    
   useEffect(() => {
-  }, [item, wishlist]);
+  }, [item]);
 
   return (
     <div className="model-view">
@@ -119,9 +119,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
           </>
         ) : (
           <>
-            <button className="help-btn" onClick={() => setDisplay(true)}>
-              ?<span>help</span>
-            </button>
+            
           </>
         )}
         
